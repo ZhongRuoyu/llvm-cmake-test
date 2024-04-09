@@ -52,12 +52,14 @@ jobs:
         run: ./test.sh
 
       - name: Upload LLVM build
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: llvm-${{ matrix.llvm-version }}-cmake-${{ matrix.cmake-version }}
           path: llvm-${{ matrix.llvm-version }}-cmake-${{ matrix.cmake-version }}.tar.gz
 
       - name: Upload LLVM build artifacts
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: llvm-${{ matrix.llvm-version }}-cmake-${{ matrix.cmake-version }}-build
