@@ -23,7 +23,7 @@ fi
 cmake_args=(
   -DCMAKE_BUILD_TYPE=Release
   -DCMAKE_INSTALL_PREFIX="/opt/llvm"
-  -DLLVM_ENABLE_RUNTIMES="libcxx;openmp"
+  -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi"
   -DLLVM_BUILD_LLVM_DYLIB=ON
   -DLLVM_LINK_LLVM_DYLIB=ON
 )
