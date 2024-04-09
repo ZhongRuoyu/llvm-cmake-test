@@ -19,21 +19,31 @@ jobs:
           - 3.29.0
           - 3.28.4
           - 3.28.3
+        ninja:
+          - true
+          - false
         include:
           - llvm-version: 16.0.6
             cmake-version: 3.29.1
+            ninja: true
           - llvm-version: 15.0.7
             cmake-version: 3.29.1
+            ninja: true
           - llvm-version: 14.0.6
             cmake-version: 3.29.1
+            ninja: true
           - llvm-version: 13.0.1
             cmake-version: 3.29.1
+            ninja: true
       fail-fast: false
     runs-on: ubuntu-latest
-    name: LLVM ${{ matrix.llvm-version }} - CMake ${{ matrix.cmake-version }}
+    name: >
+      LLVM ${{ matrix.llvm-version }} - CMake ${{ matrix.cmake-version }}
+      ${{ matrix.ninja && ' - Ninja' || '' }}
     env:
       LLVM_VERSION: ${{ matrix.llvm-version }}
       CMAKE_VERSION: ${{ matrix.cmake-version }}
+      USE_NINJA: ${{ matrix.ninja && '1' || '' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
