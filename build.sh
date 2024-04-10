@@ -5,7 +5,7 @@ set -euo pipefail
 group() {
   echo "::group::$*"
   set -x
-  "$@" || true
+  "$@"
   set +x
   # stdout and stderr synchronisation seems to be imperfect in GitHub Actions.
   sleep 3
