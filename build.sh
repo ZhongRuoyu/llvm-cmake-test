@@ -15,7 +15,12 @@ group() {
 
 setup_cmake() {
   mkdir -p /opt/cmake
-  curl -fL "https://github.com/Kitware/CMake/releases/download/v$CMAKE_VERSION/cmake-$CMAKE_VERSION-linux-x86_64.tar.gz" |
+  if [[ -n "$CMAKE_VERSION" ]]; then
+    cmake_url="https://github.com/Kitware/CMake/releases/download/v$CMAKE_VERSION/cmake-$CMAKE_VERSION-linux-x86_64.tar.gz"
+  else
+    cmake_url="https://cmake.org/files/dev/$CMAKE_FILENAME"
+  fi
+  curl -fL "$cmake_url" |
     tar -C /opt/cmake -xz --strip-components=1
   export PATH="/opt/cmake/bin:$PATH"
   cmake --version

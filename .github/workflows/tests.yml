@@ -6,32 +6,42 @@ on:
       - main
 
 jobs:
+  generate-matrix:
+    name: Generate matrix
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.generate-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - id: generate-matrix
+        name: Generate matrix
+        run: ./matrix.py
+        env:
+          LLVM_VERSION: 17.0.6,18.1.3
+          NINJA: true
+          CMAKE_MAJOR_MINOR_VERSION: 3.29
+          BEGIN_DATE: 2024-01-01
+          END_DATE: 2024-03-21
+          INTERVAL: 7
+
   tests:
+    needs: generate-matrix
     strategy:
-      matrix:
-        llvm-version:
-          - 18.1.3
-          - 18.1.2
-          - 18.1.1
-          - 17.0.6
-        cmake-version:
-          - 3.29.1
-          - 3.29.0
-          - 3.28.4
-          - 3.28.3
-        ninja:
-          - true
-          - false
+      matrix: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
       fail-fast: false
     runs-on: ubuntu-latest
     name: >
-      LLVM ${{ matrix.llvm-version }} - CMake ${{ matrix.cmake-version }}
+      LLVM ${{ matrix.llvm-version }}
+      - CMake ${{ matrix.cmake-version || matrix.cmake-filename }}
       ${{ matrix.ninja && ' - Ninja' || '' }}
     env:
       LLVM_VERSION: ${{ matrix.llvm-version }}
       CMAKE_VERSION: ${{ matrix.cmake-version }}
+      CMAKE_FILENAME: ${{ matrix.cmake-filename }}
       USE_NINJA: ${{ matrix.ninja && '1' || '' }}
-      BUILD_ID: ${{ matrix.llvm-version }}-cmake-${{ matrix.cmake-version }}${{ matrix.ninja && '-ninja' || '' }}
+      BUILD_ID: ${{ matrix.llvm-version }}-${{ matrix.cmake-version && format('cmake-{0}', matrix.cmake-version) || matrix.cmake-filename }}${{ matrix.ninja && '-ninja' || '' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
