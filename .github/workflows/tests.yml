@@ -19,12 +19,12 @@ jobs:
         name: Generate matrix
         run: ./matrix.py
         env:
-          LLVM_VERSION: 17.0.6,18.1.3
+          LLVM_VERSION: 18.1.3
           NINJA: true
           CMAKE_MAJOR_MINOR_VERSION: 3.29
-          BEGIN_DATE: 2024-01-01
-          END_DATE: 2024-03-21
-          INTERVAL: 7
+          BEGIN_DATE: 2023-09-01
+          END_DATE: 2024-01-01
+          INTERVAL: 3
 
   tests:
     needs: generate-matrix
