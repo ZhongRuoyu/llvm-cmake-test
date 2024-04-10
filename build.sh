@@ -45,11 +45,11 @@ setup_build() {
   cmake_args=(
     -DCMAKE_BUILD_TYPE=Release
     -DCMAKE_INSTALL_PREFIX="/opt/llvm"
+    -DLLVM_ENABLE_PROJECTS="clang"
     -DLLVM_ENABLE_RUNTIMES="compiler-rt;libcxx;libcxxabi;libunwind;openmp"
     -DLLVM_BUILD_LLVM_DYLIB=ON
     -DLLVM_INCLUDE_TESTS=OFF
     -DLLVM_LINK_LLVM_DYLIB=ON
-    -DLIBCXXABI_USE_LLVM_UNWINDER=OFF
   )
   if [[ -n "$USE_NINJA" ]]; then
     cmake_args=(-G Ninja "${cmake_args[@]}")
