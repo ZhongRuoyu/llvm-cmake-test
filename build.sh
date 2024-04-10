@@ -43,7 +43,7 @@ setup_build() {
   cmake_args=(
     -DCMAKE_BUILD_TYPE=Release
     -DCMAKE_INSTALL_PREFIX="/opt/llvm"
-    -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi"
+    -DLLVM_ENABLE_RUNTIMES="compiler-rt;libcxx;libcxxabi;libunwind;openmp"
     -DLLVM_BUILD_LLVM_DYLIB=ON
     -DLLVM_INCLUDE_TESTS=OFF
     -DLLVM_LINK_LLVM_DYLIB=ON
