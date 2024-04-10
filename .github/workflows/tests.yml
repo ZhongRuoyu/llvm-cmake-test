@@ -31,9 +31,13 @@ jobs:
       LLVM_VERSION: ${{ matrix.llvm-version }}
       CMAKE_VERSION: ${{ matrix.cmake-version }}
       USE_NINJA: ${{ matrix.ninja && '1' || '' }}
+      BUILD_ID: ${{ matrix.llvm-version }}-cmake-${{ matrix.cmake-version }}${{ matrix.ninja && '-ninja' || '' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Build
+        run: ./build.sh
 
       - name: Test
         run: ./test.sh
@@ -42,14 +46,14 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: llvm-${{ matrix.llvm-version }}-cmake-${{ matrix.cmake-version }}
-          path: llvm-${{ matrix.llvm-version }}-cmake-${{ matrix.cmake-version }}.tar.gz
+          name: ${{ env.BUILD_ID }}
+          path: ${{ env.BUILD_ID }}.tar.gz
           if-no-files-found: ignore
 
       - name: Upload LLVM build artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: llvm-${{ matrix.llvm-version }}-cmake-${{ matrix.cmake-version }}-build
-          path: llvm-${{ matrix.llvm-version }}-cmake-${{ matrix.cmake-version }}-build.tar.gz
+          name: ${{ env.BUILD_ID }}-build
+          path: ${{ env.BUILD_ID }}-build.tar.gz
           if-no-files-found: ignore
