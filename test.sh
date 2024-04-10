@@ -20,9 +20,9 @@ if [[ -n "$USE_NINJA" ]]; then
   ninja --version
 fi
 
+export CC="gcc-13"
+export CXX="g++-13"
 cmake_args=(
-  -DCMAKE_C_COMPILER=gcc-13
-  -DCMAKE_CXX_COMPILER=g++-13
   -DCMAKE_BUILD_TYPE=Release
   -DCMAKE_INSTALL_PREFIX="/opt/llvm"
   -DLLVM_ENABLE_RUNTIMES="libcxx;libcxxabi"
