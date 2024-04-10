@@ -57,6 +57,7 @@ jobs:
         with:
           name: llvm-${{ matrix.llvm-version }}-cmake-${{ matrix.cmake-version }}
           path: llvm-${{ matrix.llvm-version }}-cmake-${{ matrix.cmake-version }}.tar.gz
+          if-no-files-found: ignore
 
       - name: Upload LLVM build artifacts
         if: always()
@@ -64,3 +65,4 @@ jobs:
         with:
           name: llvm-${{ matrix.llvm-version }}-cmake-${{ matrix.cmake-version }}-build
           path: llvm-${{ matrix.llvm-version }}-cmake-${{ matrix.cmake-version }}-build.tar.gz
+          if-no-files-found: ignore
