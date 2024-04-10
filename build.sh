@@ -3,11 +3,12 @@
 set -euo pipefail
 
 group() {
+  # stdout and stderr synchronisation seems to be imperfect in GitHub Actions.
   echo "::group::$*"
+  sleep 3
   set -x
   "$@"
   set +x
-  # stdout and stderr synchronisation seems to be imperfect in GitHub Actions.
   sleep 3
   echo "::endgroup::"
 }
